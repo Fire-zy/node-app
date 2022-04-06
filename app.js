@@ -12,6 +12,21 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 
+//一定要在路由之前，封装res.cc函数
+app.use((req, res, next) => {
+    //status默认值为1，表示失败的情况
+    //err可能是错误对象，也可能是一个错误的描述对象
+    res.cc = function (err, status = 1) {
+        res.send({
+            // 状态
+            status,
+            // 状态描述，判断 err 是 错误对象 还是 字符串
+            message: err instanceof Error ? err.message : err,
+        })
+    }
+    next()
+})
+
 //导入并注册用户路由模块
 const userRouter = require("./router/user")
 app.use("/api", userRouter)
