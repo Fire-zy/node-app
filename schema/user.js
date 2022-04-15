@@ -41,3 +41,33 @@ exports.update_userinfo_schema = {
         email
     }
 }
+
+//验证密码对象规则
+exports.update_password_schema = {
+    //使用password这个规则，验证req.body.oldPwd的值
+    body: {
+        oldPwd: password,
+        //1. joi.ref('oldPwd')表示newPwd的值必须和oldPwd的值保持一致
+        //2. joi.not(joi.ref('oldPwd'))表示newPwd的值不能等于oldPwd的值
+        //3. 。conact()用于合并joi.not(joi.ref('oldPwd'))和password的值
+        newPwd: joi.not(joi.ref('oldPwd')).concat(password)
+    }
+}
+
+//修改头像，验证表单数据
+//dataUri()指的是如下格式的字符串数据
+//data:image/png;base64,VE9PTUFOWVNFQ1JFVFM=
+const avatar = joi.string().dataUri().required()
+exports.update_avatar_schema = {
+    body: {
+        avatar
+    }
+}
+
+//定义分类id的校验规则
+// const id = joi.number().integer().min(1).required()
+exports.delete_cate_schema = {
+    params: {
+        id
+    }
+}

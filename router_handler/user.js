@@ -46,9 +46,6 @@ exports.register = (req, res) => {
             res.cc('注册成功', 0)
         })
     })
-
-
-
 }
 
 // 登录的处理函数
@@ -81,5 +78,17 @@ exports.login = (req, res) => {
         })
     })
 
+
+}
+
+//超级管理员
+// 删除某位用户
+exports.deleteUser = (req, res) => {
+    const sqlDelete = `delete from users where id=?`
+    db.query(sqlDelete, req.params.id, (err, results) => {
+        if (err) return res.cc('err')
+        if (results.affectedRows !== 1) return res.cc('删除用户失败')
+        res.send('删除用户成功')
+    })
 
 }
