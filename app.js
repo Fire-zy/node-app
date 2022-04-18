@@ -32,7 +32,8 @@ app.use((req, res, next) => {
 const expressJwt = require('express-jwt')
 const config = require('./config')
 
-app.use(expressJwt({ secret: config.jwtSecretKey }).unless({ path: [/^\/api/] }))
+//验证token
+// app.use(expressJwt({ secret: config.jwtSecretKey }).unless({ path: [/^\/api/] }))
 
 //导入并注册用户路由模块
 const userRouter = require('./router/user')
@@ -42,6 +43,15 @@ app.use('/api', userRouter)
 //导入并使用用户信息的路由模块
 const userinfoRouter = require('./router/userinfo')
 app.use('/my', userinfoRouter)
+
+//导入并使用商品信息的路由模块
+const productRouter = require('./router/product')
+app.use('/product', productRouter)
+
+//导入并使我的选品信息的路由模块
+const myproductRouter = require('./router/myproduct')
+app.use('/myproduct', myproductRouter)
+
 
 // 定义错误级别的中间件
 app.use((err, req, res, next) => {
