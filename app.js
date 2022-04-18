@@ -52,6 +52,9 @@ app.use('/product', productRouter)
 const myproductRouter = require('./router/myproduct')
 app.use('/myproduct', myproductRouter)
 
+//导入并使用订单的路由模块
+const orderRouter = require('./router/order')
+app.use('/order', orderRouter)
 
 // 定义错误级别的中间件
 app.use((err, req, res, next) => {
