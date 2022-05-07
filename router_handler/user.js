@@ -44,6 +44,7 @@ exports.register = (req, res) => {
             }
             // 注册成功,注意要写status:0表示注册成功
             res.cc('注册成功', 0)
+            console.log(res.statusCode)
         })
     })
 }

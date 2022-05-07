@@ -17,6 +17,7 @@ const { update_userinfo_schema, update_password_schema, update_avatar_schema } =
 //获取用户的基本信息的路由
 router.get('/userinfo', userinfo_handler.getUserInfo)
 
+
 //更新用户的基本信息,里面的中间件会验证数据
 router.post('/userinfo', expressJoi(update_userinfo_schema), userinfo_handler.updateUserInfo)
 

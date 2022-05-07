@@ -49,8 +49,8 @@ const productRouter = require('./router/product')
 app.use('/product', productRouter)
 
 //导入并使我的选品信息的路由模块
-const myproductRouter = require('./router/myproduct')
-app.use('/myproduct', myproductRouter)
+const sampleRouter = require('./router/sample')
+app.use('/sample', sampleRouter)
 
 //导入并使用订单的路由模块
 const orderRouter = require('./router/order')

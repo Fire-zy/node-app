@@ -3,7 +3,7 @@
 const express = require("express")
 const router = express.Router()
 
-const myproduct_handler = require("../router_handler/myproduct")
+const sample_handler = require("../router_handler/sample")
 
 //1.导入验证数据的中间件
 // const expressJoi = require('@escook/express-joi')
@@ -11,13 +11,13 @@ const myproduct_handler = require("../router_handler/myproduct")
 // const { reg_login_schema, delete_cate_schema } = require('../schema/user')
 
 //提交商品信息
-router.post('/insertMyproduct', myproduct_handler.insertMyproduct)
+router.post('/insertSample', sample_handler.insertSample)
 //删除商品信息
-router.post('/deleteMyproduct', myproduct_handler.deleteMyproduct)
+router.post('/deleteSample', sample_handler.deleteSample)
 
-router.get('/getMyproduct', myproduct_handler.getMyproduct)
+router.get('/getSample', sample_handler.getSample)
 
-router.post('/updateMyproduct', myproduct_handler.updateMyproduct)
+router.post('/updateSample', sample_handler.updateSample)
 
 //将路由对象共享出去
 module.exports = router;
