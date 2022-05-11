@@ -35,7 +35,7 @@ exports.register = (req, res) => {
         userInfo.password = bcrypt.hashSync(userInfo.password, 10)
         //插入新用户
         const sqlInsert = `insert into users set ?`
-        db.query(sqlInsert, { username: userInfo.username, password: userInfo.password }, (err, results) => {
+        db.query(sqlInsert, req.body, (err, results) => {
             //执行sql语句失败
             if (err) return res.cc(err)
             // SQL 语句执行成功，但影响行数不为 1
@@ -44,7 +44,7 @@ exports.register = (req, res) => {
             }
             // 注册成功,注意要写status:0表示注册成功
             res.cc('注册成功', 0)
-            console.log(res.statusCode)
+            // console.log(res.statusCode)
         })
     })
 }
@@ -53,11 +53,13 @@ exports.register = (req, res) => {
 exports.login = (req, res) => {
     //接收表单的数据
     const userInfo = req.body
+    // console.log(req.body)
     //定义sql语句
     const sqlSelect = `select * from users where username=?`
     //执行sql语句,根据用户名查询用户的信息
     db.query(sqlSelect, userInfo.username, (err, results) => {
         //执行sql语句失败
+        // console.log(results[0].status)
         if (err) return res.cc(err)
         //执行sql语句成功，但是获取到的数据条不等于1
         if (results.length != 1) return res.cc('登录失败！')
@@ -73,7 +75,7 @@ exports.login = (req, res) => {
         const tokenStr = jwt.sign(user, config.jwtSecretKey, { expiresIn: config.expiresIn })
         //将token响应给客户端
         res.send({
-            status: 0,
+            status: results[0].status,
             message: '登陆成功',
             token: 'Bearer ' + tokenStr
         })

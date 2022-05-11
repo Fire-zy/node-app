@@ -29,6 +29,8 @@ exports.reg_login_schema = {
     body: {
         username,
         password,
+        email,
+        // status,
     },
 }
 
@@ -37,8 +39,6 @@ exports.update_userinfo_schema = {
     //需要对req.body里面的数据进行验证
     body: {
         id,
-        nickname,
-        email
     }
 }
 

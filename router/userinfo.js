@@ -14,17 +14,20 @@ const expressJoi = require('@escook/express-joi')
 const { update_userinfo_schema, update_password_schema, update_avatar_schema } = require('../schema/user')
 
 
-//获取用户的基本信息的路由
-router.get('/userinfo', userinfo_handler.getUserInfo)
+//获取单个用户的基本信息的路由
+router.get('/getUserinfo', userinfo_handler.getUserInfo)
 
+//获取所有用户的基本信息的路由
+router.get('/getUsers', userinfo_handler.getUsers)
 
 //更新用户的基本信息,里面的中间件会验证数据
-router.post('/userinfo', expressJoi(update_userinfo_schema), userinfo_handler.updateUserInfo)
+router.post('/updateUserinfo', userinfo_handler.updateUserInfo)
+// router.post('/updateUserinfo', expressJoi(update_userinfo_schema), userinfo_handler.updateUserInfo)
 
 //重置密码路由
-router.post('/updatepwd', expressJoi(update_password_schema), userinfo_handler.updatePassword)
+router.post('/updatePwd', expressJoi(update_password_schema), userinfo_handler.updatePassword)
 
 //更新用户头像
-router.post('/update/avatar', expressJoi(update_avatar_schema), userinfo_handler.updateAvatar)
+router.post('/updateAvatar', expressJoi(update_avatar_schema), userinfo_handler.updateAvatar)
 
 module.exports = router;

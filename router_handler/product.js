@@ -49,8 +49,8 @@ exports.deleteProduct = (req, res) => {
 //查询商品信息
 exports.getProduct = (req, res) => {
     //删除商品信息
-    const sql = `select * from product where id=?`
-    db.query(sql, req.body.id, (err, results) => {
+    const sql = `select * from product`
+    db.query(sql, (err, results) => {
         //执行sql语句失败
         if (err) return res.cc(err)
         // SQL 语句执行成功，但影响行数不为 1

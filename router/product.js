@@ -11,7 +11,7 @@ const product_handler = require("../router_handler/product")
 // const { reg_login_schema, delete_cate_schema } = require('../schema/user')
 
 //提交商品信息
-router.post('/insertProduct', product_handler.updateProduct)
+router.post('/insertProduct', product_handler.insertProduct)
 //删除商品信息
 router.post('/deleteProduct', product_handler.deleteProduct)
 
