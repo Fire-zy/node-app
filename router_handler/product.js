@@ -16,6 +16,7 @@ const config = require('../config')
 exports.insertProduct = (req, res) => {
     //获取客户端提交到服务器的数据
     const product = req.body
+    // console.log(product)
     //插入新商品信息
     const sqlInsert = `insert into product set ?`
     db.query(sqlInsert, product, (err, results) => {

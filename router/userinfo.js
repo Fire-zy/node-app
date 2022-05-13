@@ -15,7 +15,7 @@ const { update_userinfo_schema, update_password_schema, update_avatar_schema } =
 
 
 //获取单个用户的基本信息的路由
-router.get('/getUserinfo', userinfo_handler.getUserInfo)
+router.post('/getUserinfo', userinfo_handler.getUserInfo)
 
 //获取所有用户的基本信息的路由
 router.get('/getUsers', userinfo_handler.getUsers)

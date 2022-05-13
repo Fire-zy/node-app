@@ -27,9 +27,9 @@ exports.getUsers = (req, res) => {
 //获取单个用户基本信息的处理函数
 exports.getUserInfo = (req, res) => {
     //定义查询用户信息的sql语句
-    const sqlSelect = `select * from users where id=?`
+    const sqlSelect = `select * from users where username=?`
     //调用dq.query()执行sql语句
-    db.query(sqlSelect, req.body.id, (err, results) => {
+    db.query(sqlSelect, req.body.username, (err, results) => {
         //执行sql语句失败
         if (err) return res.cc(err)
         //执行成功，但是查询结果可能为空

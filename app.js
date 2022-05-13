@@ -52,9 +52,31 @@ app.use('/product', productRouter)
 const sampleRouter = require('./router/sample')
 app.use('/sample', sampleRouter)
 
+//解决跨域
+app.all('*', function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Headers', 'Content-type');
+    res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS,PATCH");
+    res.header('Access-Control-Max-Age', 1728000);//预请求缓存20天
+    next();
+});
+
+//上传图片
+const uploadRouter = require('./router/upload')
+app.use('/api', uploadRouter)
+
 //导入并使用订单的路由模块
 const orderRouter = require('./router/order')
 app.use('/order', orderRouter)
+
+//导入上传文件中间件，能帮助我们实现接收文件的接口
+const multer = require('multer')
+//接收到的文件放uploads文件夹
+const upload = multer({ dest: 'uploads/' })
+//使得让外部通过链接可以访问这个文件夹里文件（ 地址 + 端口 / 文件名 ）便可访问
+app.use(express.static('uploads'))
+
+app.use('/public', express.static('public'));//将文件设置成静态
 
 // 定义错误级别的中间件
 app.use((err, req, res, next) => {
