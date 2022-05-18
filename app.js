@@ -69,6 +69,15 @@ app.use('/api', uploadRouter)
 const orderRouter = require('./router/order')
 app.use('/order', orderRouter)
 
+//导入并使用排单的路由模块
+const timeRouter = require('./router/time')
+app.use('/time', timeRouter)
+
+//导入并使用数据分析的路由模块
+const analyseRouter = require('./router/analyse')
+app.use('/analyse', analyseRouter)
+
+
 //导入上传文件中间件，能帮助我们实现接收文件的接口
 const multer = require('multer')
 //接收到的文件放uploads文件夹
