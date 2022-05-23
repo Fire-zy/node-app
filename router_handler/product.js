@@ -47,7 +47,7 @@ exports.deleteProduct = (req, res) => {
     })
 }
 
-//查询商品信息
+//查询所有商品信息
 exports.getProduct = (req, res) => {
     //删除商品信息
     const sql = `select * from product`
@@ -67,6 +67,26 @@ exports.getProduct = (req, res) => {
         })
     })
 }
+//查询部分商品信息
+exports.getDifferent = (req, res) => {
+    const sql = `select * from product where choosestatus=?`
+    db.query(sql, req.body.choosestatus, (err, results) => {
+        //执行sql语句失败
+        if (err) return res.cc(err)
+        // SQL 语句执行成功，但影响行数不为 1
+        if (results.length < 1) {
+            return res.send('查询商品信息失败')
+        }
+        // 注册成功,注意要写status:0表示注册成功
+        // res.cc('查询商品信息成功', 0)
+        res.send({
+            status: 0,
+            message: '获取商品信息成功',
+            data: results
+        })
+    })
+}
+
 //更新商品信息
 exports.updateProduct = (req, res) => {
     //定义待执行的sql语句

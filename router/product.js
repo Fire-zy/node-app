@@ -16,6 +16,8 @@ router.post('/insertProduct', product_handler.insertProduct)
 router.post('/deleteProduct', product_handler.deleteProduct)
 
 router.get('/getProduct', product_handler.getProduct)
+//按条件查询
+router.post('/getDifferent', product_handler.getDifferent)
 
 router.post('/updateProduct', product_handler.updateProduct)
 

@@ -13,29 +13,14 @@ const jwt = require('jsonwebtoken')
 const config = require('../config')
 
 
-//查询我的数据分析
+//查询所有我的数据分析
 exports.getAnalyse = (req, res) => {
     const sql = `select * from analyse`
     db.query(sql, (err, results) => {
-        //执行sql语句失败
         if (err) return res.cc(err)
-        // SQL 语句执行成功，但影响行数不为 1
         if (results.length < 1) {
             return res.send('查询数据分析失败')
         }
-        // 注册成功,注意要写status:0表示注册成功
-        // res.cc('查询商品信息成功', 0)
-        //分数比重，好评和差评20%，物流、服务、宝贝描述30%，销量30%，
-        // 每一项总分100，计算出每一项得分，最后再算取得分
-        // console.log(results.length)
-        //循环key次，依次输出每个对象的内容
-
-        // 评论分数计算
-        function comment(a, b) {
-            var c = a % b
-            console.log(c)
-        }
-        // 物流分数计算
         function Score(value, callback) {
             var rank = 0
             if (value > 4.8) {
@@ -55,51 +40,72 @@ exports.getAnalyse = (req, res) => {
                 callback(rank)
             }
         }
-        // 服务分数计算
-        function serScore(value, rankscore) {
-            if (value > 4.8) {
-                rankscore += 100
-                console.log(rankscore)
-            } else if (value <= 4.8 && value > 4.7) {
-                rankscore += 90
-                console.log(rankscore)
-            } else if (value <= 4.7 && value > 4.6) {
-                rankscore += 80
-                console.log(rankscore)
-            } else if (value <= 4.6 && value > 4.5) {
-                rankscore += 70
-                console.log(rankscore)
-            } else {
-                rankscore += 60
-                console.log(rankscore)
-            }
-        }
-
-
         for (let key in results) {
             var sum = 0  //总分
-            var praise = results[key].praise  //好评，没啥意义，可以刷单
-            var negative = results[key].negative  //差评，没啥意义，可以刷单
-            var sales = results[key].sales  //月销量，这个比较不一样,同一类别的相比较
-
             var logscore = results[key].logscore  //物流评分
             var serscore = results[key].serscore  //服务评分
             var describescore = results[key].describescore  //描述评分
-            // var stoscore = results[key].stoscore  //店铺评分
-
             Score(logscore, function (rank) {
-                sum += rank * 0.1
+                sum += rank * 0.25
             })
             Score(serscore, function (rank) {
-                sum += rank * 0.1
+                sum += rank * 0.25
             })
             Score(describescore, function (rank) {
-                sum += rank * 0.1
+                sum += rank * 0.25
             })
-            console.log(sum)
-
+            // console.log(sum)
         }
+        res.send({
+            status: 0,
+            message: '获取数据分析成功',
+            data: results
+        })
+    })
+}
 
+//按需查询数据
+exports.getDifferent = (req, res) => {
+    const sql = `select * from analyse where pro_type=?`
+    db.query(sql, req.body.pro_type, (err, results) => {
+        if (err) return res.cc(err)
+        if (results.length < 1) {
+            return res.send('查询数据分析失败')
+        }
+        function Score(value, callback) {
+            var rank = 0
+            if (value > 4.8) {
+                rank += 100
+                callback(rank)
+            } else if (value <= 4.8 && value > 4.7) {
+                rank += 90
+                callback(rank)
+            } else if (value <= 4.7 && value > 4.6) {
+                rank += 80
+                callback(rank)
+            } else if (value <= 4.6 && value > 4.5) {
+                rank += 70
+                callback(rank)
+            } else {
+                rank += 60
+                callback(rank)
+            }
+        }
+        for (let key in results) {
+            var sum = 0  //总分
+            var logscore = results[key].logscore  //物流评分
+            var serscore = results[key].serscore  //服务评分
+            var describescore = results[key].describescore  //描述评分
+            Score(logscore, function (rank) {
+                sum += rank * 0.25
+            })
+            Score(serscore, function (rank) {
+                sum += rank * 0.25
+            })
+            Score(describescore, function (rank) {
+                sum += rank * 0.25
+            })
+        }
         res.send({
             status: 0,
             message: '获取数据分析成功',

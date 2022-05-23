@@ -16,6 +16,7 @@ router.post('/insertSample', sample_handler.insertSample)
 router.post('/deleteSample', sample_handler.deleteSample)
 
 router.get('/getSample', sample_handler.getSample)
+router.post('/getDifferent', sample_handler.getDifferent)
 
 router.post('/updateSample', sample_handler.updateSample)
 

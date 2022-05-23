@@ -53,22 +53,17 @@ exports.register = (req, res) => {
 exports.login = (req, res) => {
     //接收表单的数据
     const userInfo = req.body
-    // console.log(req.body)
     //定义sql语句
     const sqlSelect = `select * from users where username=?`
     //执行sql语句,根据用户名查询用户的信息
     db.query(sqlSelect, userInfo.username, (err, results) => {
         //执行sql语句失败
-        // console.log(results[0].status)
         if (err) return res.cc(err)
         //执行sql语句成功，但是获取到的数据条不等于1
         if (results.length != 1) return res.cc('登录失败！')
-
         //判断密码是否正确
         const compareResult = bcrypt.compareSync(userInfo.password, results[0].password)
         if (!compareResult) return res.cc('密码错误，登陆失败')
-
-
         //在服务器端生成token的字符串
         const user = { ...results[0], password: '' }
         //对用户的信息进行加密，生成token 字符串
@@ -80,8 +75,6 @@ exports.login = (req, res) => {
             token: 'Bearer ' + tokenStr
         })
     })
-
-
 }
 
 //超级管理员

@@ -16,6 +16,8 @@ router.post('/insertAnalyse', analyse_handler.insertAnalyse)
 router.post('/deleteAnalyse', analyse_handler.deleteAnalyse)
 
 router.get('/getAnalyse', analyse_handler.getAnalyse)
+router.post('/getDifferent', analyse_handler.getDifferent)
+
 
 router.post('/updateAnalyse', analyse_handler.updateAnalyse)
 
