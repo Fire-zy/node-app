@@ -24,6 +24,11 @@ router.get('/getUsers', userinfo_handler.getUsers)
 router.post('/updateUserinfo', userinfo_handler.updateUserInfo)
 // router.post('/updateUserinfo', expressJoi(update_userinfo_schema), userinfo_handler.updateUserInfo)
 
+
+//删除用户的基本信息,里面的中间件会验证数据
+router.post('/deleteUserInfo', userinfo_handler.deleteUserInfo)
+
+
 //重置密码路由
 router.post('/updatePwd', expressJoi(update_password_schema), userinfo_handler.updatePassword)
 

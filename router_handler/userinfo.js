@@ -58,6 +58,21 @@ exports.updateUserInfo = (req, res) => {
         res.cc('更新用户成功！', 0)
     })
 }
+//删除用户基本信息的处理函数
+exports.deleteUserInfo = (req, res) => {
+    //定义待执行的sql语句
+    const sql = `delete from users where id=?`
+    //调用db.query()执行sql语句并传递参数
+    db.query(sql, req.body.id, (err, results) => {
+        //执行sql语句失败
+        if (err) return res.cc(err)
+        //执行sql语句失败，但是影响行数不等于1
+        if (results.affectedRows !== 1) return res.cc('删除用户失败')
+        //更新用户成功
+        res.cc('删除用户成功！', 0)
+    })
+}
+
 
 //重置密码
 exports.updatePassword = (req, res) => {
