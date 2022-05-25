@@ -78,6 +78,10 @@ const analyseRouter = require('./router/analyse')
 app.use('/analyse', analyseRouter)
 
 
+//导入并使用系统通知的路由模块
+const noticeRouter = require('./router/notice')
+app.use('/notice', noticeRouter)
+
 //导入上传文件中间件，能帮助我们实现接收文件的接口
 const multer = require('multer')
 //接收到的文件放uploads文件夹
