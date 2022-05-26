@@ -82,6 +82,11 @@ app.use('/analyse', analyseRouter)
 const noticeRouter = require('./router/notice')
 app.use('/notice', noticeRouter)
 
+//导入并使用模块设置的路由模块
+const modulesRouter = require('./router/modules')
+app.use('/modules', modulesRouter)
+
+
 //导入上传文件中间件，能帮助我们实现接收文件的接口
 const multer = require('multer')
 //接收到的文件放uploads文件夹
