@@ -135,16 +135,17 @@ exports.insertAnalyse = (req, res) => {
 
 //删除我的数据分析
 exports.deleteAnalyse = (req, res) => {
-    const sql = `delete from analyse where id=?`
-    db.query(sql, req.body.id, (err, results) => {
+    const sql = `delete from analyse where id in (?)`
+    db.query(sql, [req.body], (err, results) => {
         //执行sql语句失败
         if (err) return res.cc(err)
         // SQL 语句执行成功，但影响行数不为 1
-        if (results.affectedRows !== 1) {
-            return res.send('删除数据分析失败')
+        console.log(results.affectedRows)
+        if (results.affectedRows < 1) {
+            return res.send('批量删除数据分析失败')
         }
         // 注册成功,注意要写status:0表示注册成功
-        res.cc('删除数据分析成功', 0)
+        res.cc('批量删除数据分析成功', 0)
     })
 }
 
